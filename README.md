@@ -66,17 +66,13 @@ Frontend
 
 ![Dashboard](screenshots/dashboard.png)
 
-### 🎯 Skill Analysis
+### 🎯 skill_mathch_overview
 
-![Skill Analysis](screenshots/skill-analysis.png)
+![skill_mathch_overview](screenshots/skill_mathch_overview.png)
 
 ### 🗺️ Learning Roadmap
 
 ![Learning Roadmap](screenshots/roadmap.png)
-
-### 📈 Progress Tracking
-
-![Progress Tracking](screenshots/progress.png)
 
 ## ⚙️ Installation
 
