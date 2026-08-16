@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Career & Skill Analyzer</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-globes">
+    <div class="globe globe-1"></div>
+    <div class="globe globe-2"></div>
+  </div>
+
+  <div class="container">
+    <!-- Header Navigation -->
+    <header class="navbar">
+      <div class="logo">
+        <span class="sparkle">✨</span> AI Career <span class="accent-text">& Skill Analyzer</span>
+      </div>
+      <div class="user-status" id="userStatus">
+        <span id="userGreeting">Not logged in</span>
+        <button id="logoutBtn" class="btn btn-outline btn-sm hidden">Logout</button>
+      </div>
+    </header>
+
+    <!-- Notification Alert Banner -->
+    <div id="alertBox" class="alert hidden"></div>
+
+    <!-- Auth View (Login / Register) -->
+    <section id="authSection" class="card auth-card">
+      <div class="tab-header">
+        <button id="tabLogin" class="tab-btn active">Login</button>
+        <button id="tabRegister" class="tab-btn">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="auth-form">
+        <h2 class="form-title">Welcome Back</h2>
+        <p class="form-subtitle">Log in to track your career roadmap & skill growth</p>
+        
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" placeholder="e.g. alex@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Log In</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" class="auth-form hidden">
+        <h2 class="form-title">Create Account</h2>
+        <p class="form-subtitle">Start analyzing your career path in minutes</p>
+
+        <div class="form-group">
+          <label for="regName">Full Name</label>
+          <input type="text" id="regName" placeholder="e.g. Alex Johnson" required>
+        </div>
+
+        <div class="form-group">
+          <label for="regEmail">Email Address</label>
+          <input type="email" id="regEmail" placeholder="e.g. alex@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="regPassword">Password (min 6 chars)</label>
+          <input type="password" id="regPassword" placeholder="••••••••" required minlength="6">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+      </form>
+    </section>
+
+    <!-- Main Dashboard View -->
+    <main id="dashboardSection" class="dashboard hidden">
+      <!-- Grid Layout: Left Column (Profile & Goal), Right Column (Analysis & Roadmap) -->
+      <div class="dashboard-grid">
+        
+        <!-- Left Side: Profile & Career Setup -->
+        <div class="side-column">
+          <!-- Career Goal Card -->
+          <div class="card">
+            <h3 class="card-title">🎯 Select Career Goal</h3>
+            <p class="card-desc">Choose the role you want to target</p>
+            <div class="form-group">
+              <select id="careerGoalSelect" class="form-select">
+                <option value="Full Stack Developer">Full Stack Developer</option>
+                <option value="Frontend Developer">Frontend Developer</option>
+                <option value="Backend Developer">Backend Developer</option>
+                <option value="Data Scientist">Data Scientist</option>
+                <option value="AI/ML Engineer">AI/ML Engineer</option>
+                <option value="DevOps Engineer">DevOps Engineer</option>
+              </select>
+            </div>
+            <button id="saveGoalBtn" class="btn btn-secondary btn-sm full-width">Save Target Role</button>
+          </div>
+
+          <!-- Skills & Profile Card -->
+          <div class="card">
+            <h3 class="card-title">💡 My Current Skills</h3>
+            <p class="card-desc">Enter your current technical skills (separated by commas)</p>
+            
+            <div class="form-group">
+              <textarea id="skillsInput" rows="3" class="form-textarea" placeholder="e.g. HTML, CSS, JavaScript, React, Git"></textarea>
+            </div>
+            <button id="saveSkillsBtn" class="btn btn-secondary btn-sm full-width">Update Skills</button>
+          </div>
+
+          <!-- Trigger Analysis Button -->
+          <button id="analyzeBtn" class="btn btn-gradient btn-block">
+            ⚡ Analyze Skills & Generate Roadmap
+          </button>
+        </div>
+
+        <!-- Right Side: Skill Analysis Results & Roadmap -->
+        <div class="main-column">
+          
+          <!-- Analysis Overview Card -->
+          <div id="analysisCard" class="card empty-card">
+            <div class="card-header-flex">
+              <div>
+                <h3 class="card-title">📊 Skill Match Overview</h3>
+                <p id="targetRoleLabel" class="card-desc">Target Role: None selected</p>
+              </div>
+              <div class="match-badge" id="matchBadge">0%</div>
+            </div>
+
+            <!-- Match Progress Bar -->
+            <div class="progress-container">
+              <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+            </div>
+
+            <!-- Skills Comparison breakdown -->
+            <div class="skills-grid">
+              <div class="skills-box">
+                <h4>✅ Matched Skills</h4>
+                <div id="matchedSkillsList" class="pills-container">
+                  <span class="pill pill-gray">No analysis performed yet</span>
+                </div>
+              </div>
+
+              <div class="skills-box">
+                <h4>🚀 Missing Skills to Learn</h4>
+                <div id="missingSkillsList" class="pills-container">
+                  <span class="pill pill-gray">No analysis performed yet</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Roadmap Checklist Card -->
+          <div class="card">
+            <div class="card-header-flex">
+              <h3 class="card-title">🗺️ Personalized Learning Roadmap</h3>
+              <span id="roadmapCountBadge" class="badge">0 Tasks</span>
+            </div>
+            <p class="card-desc">Check off tasks as you complete them to track your progress</p>
+
+            <div id="roadmapList" class="roadmap-list">
+              <div class="placeholder-text">
+                Click <strong>"Analyze Skills & Generate Roadmap"</strong> to create your step-by-step career path!
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
